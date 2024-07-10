@@ -1,29 +1,37 @@
 #pragma once
 #include <iostream>
+#include <initializer_list>
 
 class Vector
 {
 public:
-	Vector();
-	Vector(const Vector& rhs);
-	Vector(int elements, int value = 0);
-	Vector(const std::initializer_list<int>& list);
+    // Constructors
+    Vector();
+    Vector(const Vector& rhs);
+    Vector(int elements, int value = 0);
+    Vector(const std::initializer_list<int>& list);
 
-	~Vector();
-	void PushBack(int value);
+    // Destructor
+    ~Vector();
 
-	bool Empty() const;
-	int Size()const;
-	int Capacity()const;
+    // Functions
+    void PushBack(int value);
+    void PopBack();
+    void Clear();
+    void Reverse();
+    void Display() const;
+    bool Empty() const;
+    int Size() const;
+    int Capacity() const;
 
-	bool operator==(const Vector& rhs) const;
-	bool operator!=(const Vector& rhs) const;
-	
-	friend std::ostream& operator <<(std::ostream& ostr, const Vector& rhs);
+    // Operators
+    bool operator==(const Vector& rhs) const;
+    bool operator!=(const Vector& rhs) const;
 
+    friend std::ostream& operator<<(std::ostream& ostr, const Vector& rhs);
 
 private:
-	int size;
-	int capacity;
-	int* array;
+    int size;
+    int capacity;
+    int* array;
 };

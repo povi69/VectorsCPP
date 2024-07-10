@@ -1,122 +1,152 @@
 #include "Vector.h"
+#include <algorithm>  // For reverse
 
 Vector::Vector()
-	:size(0),
-	capacity(5),
-	array(new int[capacity])
+    : size(0),
+    capacity(5),
+    array(new int[capacity])
 {
-	//Nothing to look in here :0
+    // Nothing
 }
+
 Vector::Vector(const Vector& rhs)
-	:size(rhs.size),
-	capacity(rhs.capacity + 5),
-	array(new int[capacity])
+    : size(rhs.size),
+    capacity(rhs.capacity + 5),
+    array(new int[capacity])
 {
-	for (int i = 0; i < rhs.Size(); i++)
-	{
-		array[i] = rhs.array[i];
-	}
+    for (int i = 0; i < rhs.Size(); i++)
+    {
+        array[i] = rhs.array[i];
+    }
 }
+
 Vector::Vector(int elements, int value)
-	:size(elements),
-	capacity(elements + 5),
-	array(new int[capacity])
+    : size(elements),
+    capacity(elements + 5),
+    array(new int[capacity])
 {
-	for (int i = 0; i < size; i++)
-	{
-		array[i] = value;
-	}
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = value;
+    }
 }
 
 Vector::Vector(const std::initializer_list<int>& list)
-	:size(0),
-	capacity(list.size() + 5),
-	array(new int[capacity])
+    : size(0),
+    capacity(list.size() + 5),
+    array(new int[capacity])
 {
-	for (int i : list)
-	{
-		PushBack(i);
-	}
+    for (int i : list)
+    {
+        PushBack(i);
+    }
 }
 
 Vector::~Vector()
 {
-	delete[] array;
+    delete[] array;
 }
 
 void Vector::PushBack(int value)
-{	
-	if (size < capacity)
-	{
-		array[size] = value;
-		++size;
-	}
-	else
-	{
-		capacity *= 2;
-		int* newarray = new int[capacity];
-		for (int i = 0; i < size; i++)
-		{
-			newarray[i] = array[i];
-		}
-		newarray[size] = value;
-		++size;
-		delete[] array;
-		array = newarray;
-	}
-
+{
+    if (size < capacity)
+    {
+        array[size] = value;
+        ++size;
+    }
+    else
+    {
+        capacity *= 2;
+        int* newarray = new int[capacity];
+        for (int i = 0; i < size; i++)
+        {
+            newarray[i] = array[i];
+        }
+        newarray[size] = value;
+        ++size;
+        delete[] array;
+        array = newarray;
+    }
+}
+//remove the last number from the vector
+void Vector::PopBack()
+{
+    if (size > 0)
+    {
+        --size;
+    }
+}
+//clears the vector and make the size equal to 0
+void Vector::Clear()
+{
+    size = 0;
 }
 
-bool Vector::Empty()const
+//using a built it librerty to reverse the numbers
+void Vector::Reverse()
 {
-	return size == 0;
+    std::reverse(array, array + size);
 }
 
-int Vector::Size()const
+//Displays the Vector
+void Vector::Display() const
 {
-	return size;
+    for (int i = 0; i < size; ++i)
+    {
+        std::cout << array[i] << " ";
+    }
+    std::cout << std::endl;
 }
 
-int Vector::Capacity()const
+bool Vector::Empty() const
 {
-	return capacity;
+    return size == 0;
+}
+
+int Vector::Size() const
+{
+    return size;
+}
+
+int Vector::Capacity() const
+{
+    return capacity;
 }
 
 bool Vector::operator==(const Vector& rhs) const
 {
-	if (Size() != rhs.Size())
-	{
-		return false;
-	}
+    if (Size() != rhs.Size())
+    {
+        return false;
+    }
 
-	for (int i = 0; i < Size(); i++)
-	{
-		if (array[i] != rhs.array[i])
-		{
-			return false;
-		}
-	}
-	return true;
+    for (int i = 0; i < Size(); i++)
+    {
+        if (array[i] != rhs.array[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
-bool Vector::operator!=(const Vector& rhs)const
+bool Vector::operator!=(const Vector& rhs) const
 {
-	return!(*this == rhs);
+    return !(*this == rhs);
 }
 
 std::ostream& operator<<(std::ostream& ostr, const Vector& rhs)
 {
-	for (int i = 0; i < rhs.size; i++)
-	{
-		ostr << rhs.array[i] << " ";
-	}
-	
-	ostr << " || ";
+    for (int i = 0; i < rhs.size; i++)
+    {
+        ostr << rhs.array[i] << " ";
+    }
 
-	for (int i = rhs.size; i < rhs.capacity; i++)
-	{
-		ostr << rhs.array[i] << " ";
-	}
-	return ostr;
+    ostr << " || ";
 
+    for (int i = rhs.size; i < rhs.capacity; i++)
+    {
+        ostr << rhs.array[i] << " ";
+    }
+    return ostr;
 }
