@@ -2,24 +2,25 @@
 #include <iostream>
 #include <initializer_list>
 #include <algorithm>
+int capacityNumber = 5;
 
-
+template<typename T>
 class Vector
 {
 public:
     // Constructors
     Vector()
-        :size(0),
-        capacity(5),
-        array(new int[capacity])
+        : size(0),
+        capacity(capacityNumber),
+        array(new T[capacity])
     {
 
     }
-
+    
     Vector(const Vector& rhs)
-        :size(rhs.size),
-        capacity(rhs.capacity + 5),
-        array(new int[capacity])
+        : size(rhs.size),
+        capacity(rhs.capacity + capacityNumber),
+        array(new T[capacity])
     {
         for (int i = 0; i < rhs.Size(); i++)
         {
@@ -27,10 +28,10 @@ public:
         }
     }
 
-    Vector(int elements, int value)
+    Vector(int elements, T value)
         : size(elements),
-        capacity(elements + 5),
-        array(new int[capacity])
+        capacity(elements + capacityNumber),
+        array(new T[capacity])
     {
         for (int i = 0; i < size; i++)
         {
@@ -38,12 +39,12 @@ public:
         }
     }
 
-    Vector(const std::initializer_list<int>& list)
+    Vector(const std::initializer_list<T>& list)
         : size(0),
-        capacity(list.size() + 5),
-        array(new int[capacity])
+        capacity(list.size() + capacityNumber),
+        array(new T[capacity])
     {
-        for (int i : list)
+        for (const T& i : list)
         {
             PushBack(i);
         }
@@ -56,7 +57,7 @@ public:
     }
 
     // Functions
-    void PushBack(int value)
+    void PushBack(T value)
     {
         if (size < capacity)
         {
@@ -65,8 +66,9 @@ public:
         }
         else
         {
-            capacity *= 2;
-            int* newarray = new int[capacity];
+            // Double the capacity
+            capacity = capacity * 2;
+            T* newarray = new T[capacity];
             for (int i = 0; i < size; i++)
             {
                 newarray[i] = array[i];
@@ -77,7 +79,7 @@ public:
             array = newarray;
         }
     }
-    //remove the last number from the vector
+
     void PopBack()
     {
         if (size > 0)
@@ -85,19 +87,17 @@ public:
             --size;
         }
     }
-    //clears the vector and make the size equal to 0
+
     void Clear()
     {
         size = 0;
     }
 
-    //using a built in librerty to reverse the numbers
     void Reverse()
     {
         std::reverse(array, array + size);
     }
 
-    //Displays the Vector
     void Display() const
     {
         for (int i = 0; i < size; ++i)
@@ -144,24 +144,8 @@ public:
         return !(*this == rhs);
     }
 
-    friend std::ostream& operator<<(std::ostream& ostr, const Vector& rhs)
-    {
-        for (int i = 0; i < rhs.size; i++)
-        {
-            ostr << rhs.array[i] << " ";
-        }
-
-        ostr << " || ";
-
-        for (int i = rhs.size; i < rhs.capacity; i++)
-        {
-            ostr << rhs.array[i] << " ";
-        }
-        return ostr;
-    }
-
 private:
     int size;
     int capacity;
-    int* array;
+    T* array;
 };

@@ -3,7 +3,7 @@
 int main()
 {
     // Create a Vector with an initializer list
-    Vector vec{ 1, 2, 3, 4, 5 };
+    Vector<int> vec{ 1, 2, 3, 4, 5 };
     std::cout << "Initial Vector: ";
     vec.Display();  // Output: 1 2 3 4 5 
 
