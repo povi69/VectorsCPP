@@ -4,26 +4,27 @@ int main()
 {
     // Create a Vector with an initializer list
     Vector<int> vec{ 1, 2, 3, 4, 5 };
+    Vector<int> vec2{ 5, 4, 3, 2, 1 };
     std::cout << "Initial Vector: ";
-    vec.Display();  // Output: 1 2 3 4 5 
+    vec.display();  // Output: 1 2 3 4 5 
 
     // Reverse the Vector
-    vec.Reverse();
+    vec.reverse();
     std::cout << "Reversed Vector: ";
-    vec.Display();  // Output: 5 4 3 2 1 
+    vec.display();  // Output: 5 4 3 2 1 
 
     // Pop the last element
-    vec.PopBack();
+    vec.popBack();
     std::cout << "After PopBack: ";
-    vec.Display();  // Output: 5 4 3 2 
+    vec.display();  // Output: 5 4 3 2 
 
     // Clear the Vector
-    vec.Clear();
+    vec.clear();
     std::cout << "After Clear: ";
-    vec.Display();  // Output: (empty line)
+    vec.display();  // Output: (empty line)
 
     // Check if the Vector is empty
-    if (vec.Empty())
+    if (vec.empty())
     {
         std::cout << "Vector is empty." << std::endl;
     }
@@ -33,15 +34,25 @@ int main()
     }
 
     // Push elements to the Vector
-    vec.PushBack(10);
-    vec.PushBack(20);
-    vec.PushBack(30);
+    vec.pushBack(10);
+    vec.pushBack(20);
+    vec.pushBack(30);
     std::cout << "After PushBack: ";
-    vec.Display();  // Output: 10 20 30 
+    vec.display();  // Output: 10 20 30 
 
     // Check size and capacity
-    std::cout << "Size: " << vec.Size() << std::endl;        // Output: Size: 3
-    std::cout << "Capacity: " << vec.Capacity() << std::endl; // Output: Capacity: 10
+    std::cout << "Size: " << vec.getSize() << std::endl;        // Output: Size: 3
+    std::cout << "Capacity: " << vec.getCapacity() << std::endl; // Output: Capacity: 10
+
+    // Checking if the != operator is working
+    if (vec != vec2)
+    {
+        std::cout << "vec and vec2 are not equal" << std::endl;
+    }
+    else
+    {
+        std::cout << "vec and vec2 are equal" << std::endl;
+    }
 
     return 0;
 }

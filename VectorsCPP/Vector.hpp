@@ -2,32 +2,48 @@
 #include <iostream>
 #include <initializer_list>
 #include <algorithm>
-int capacityNumber = 5;
+
+constexpr int capacityNumber = 5;
+constexpr int multiplier = 2;
 
 template<typename T>
 class Vector
 {
+
 public:
+
     // Constructors
+    /// <summary>
+    /// a constructor class
+    /// to handle vector()
+    /// </summary>
     Vector()
         : size(0),
         capacity(capacityNumber),
         array(new T[capacity])
     {
-
     }
-    
+
+    /// <summary>
+    /// Constructor function to handle Vector(Size)
+    /// </summary>
+    /// <param name="rhs"></param>
     Vector(const Vector& rhs)
         : size(rhs.size),
-        capacity(rhs.capacity + capacityNumber),
+        capacity(rhs.capacity),
         array(new T[capacity])
     {
-        for (int i = 0; i < rhs.Size(); i++)
+        for (int i = 0; i < rhs.size; i++)
         {
             array[i] = rhs.array[i];
         }
     }
 
+    /// <summary>
+    /// Constructor function to handle vector(number, size)
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <param name="value"></param>
     Vector(int elements, T value)
         : size(elements),
         capacity(elements + capacityNumber),
@@ -39,6 +55,10 @@ public:
         }
     }
 
+    /// <summary>
+    /// Constructor function to handle Vector {1,2,3,4,5}
+    /// </summary>
+    /// <param name="list"></param>
     Vector(const std::initializer_list<T>& list)
         : size(0),
         capacity(list.size() + capacityNumber),
@@ -46,18 +66,23 @@ public:
     {
         for (const T& i : list)
         {
-            PushBack(i);
+            pushBack(i);
         }
     }
 
-    // Destructor
+    /// <summary>
+    /// Deconstructor for Vector()
+    /// </summary>
     ~Vector()
     {
         delete[] array;
     }
 
-    // Functions
-    void PushBack(T value)
+    /// <summary>
+    /// Function to put a value at the top of the vector
+    /// </summary>
+    /// <param name="value"></param>
+    void pushBack(T value)
     {
         if (size < capacity)
         {
@@ -66,8 +91,7 @@ public:
         }
         else
         {
-            // Double the capacity
-            capacity = capacity * 2;
+            capacity *= multiplier;
             T* newarray = new T[capacity];
             for (int i = 0; i < size; i++)
             {
@@ -80,7 +104,11 @@ public:
         }
     }
 
-    void PopBack()
+    /// <summary>
+    /// remove the first number in the vector. 
+    /// it does not return it
+    /// </summary>
+    void popBack()
     {
         if (size > 0)
         {
@@ -88,17 +116,23 @@ public:
         }
     }
 
-    void Clear()
+    void clear()
     {
         size = 0;
     }
 
-    void Reverse()
+    /// <summary>
+    /// Flip the values in the vector. for example 1,2,3,4 will be 4,3,2,1
+    /// </summary>
+    void reverse()
     {
         std::reverse(array, array + size);
     }
 
-    void Display() const
+    /// <summary>
+    /// Prints the vector's values
+    /// </summary>
+    void display() const
     {
         for (int i = 0; i < size; ++i)
         {
@@ -107,29 +141,46 @@ public:
         std::cout << std::endl;
     }
 
-    bool Empty() const
+    /// <summary>
+    /// Clears the vector
+    /// </summary>
+    /// <returns></returns>
+    bool empty() const
     {
         return size == 0;
     }
 
-    int Size() const
+    /// <summary>
+    /// returns the size of the vector
+    /// </summary>
+    /// <returns></returns>
+    size_t getSize() const
     {
         return size;
     }
 
-    int Capacity() const
+    /// <summary>
+    /// returns the capactiy of the vector
+    /// </summary>
+    /// <returns></returns>
+    size_t getCapacity() const
     {
         return capacity;
     }
 
+    /// <summary>
+    /// check if the 2 vectors are equal. for example if(vec1 == vec2)
+    /// </summary>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
     bool operator==(const Vector& rhs) const
     {
-        if (Size() != rhs.Size())
+        if (size != rhs.size)
         {
             return false;
         }
 
-        for (int i = 0; i < Size(); i++)
+        for (int i = 0; i < size; i++)
         {
             if (array[i] != rhs.array[i])
             {
@@ -139,13 +190,18 @@ public:
         return true;
     }
 
+    /// <summary>
+    /// checks if 2 vectors are not equal. for example if(vec1 != vec2)
+    /// </summary>
+    /// <param name="rhs"></param>
+    /// <returns></returns>
     bool operator!=(const Vector& rhs) const
     {
         return !(*this == rhs);
     }
 
 private:
-    int size;
-    int capacity;
+    size_t size;
+    size_t capacity;
     T* array;
 };
